@@ -260,9 +260,9 @@ if __name__ == "__main__":
             let out = "";
             for(let i=0;i<n;i++){
                 for(let j=0;j<n;j++){
-                    if(path && pathSet.has([i,j].join(","))) out += '';
-                    else if(field[i][j]===0) out += '';
-                    else out += '';
+                    if(path && pathSet.has([i,j].join(","))) out += '🟩';
+                    else if(field[i][j]===0) out += '⬜';
+                    else out += '⬛';
                 }
                 out += "\n";
             }
