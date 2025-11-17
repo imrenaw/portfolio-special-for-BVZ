@@ -1,0 +1,373 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matplotlib - BVZ Portfolio</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../animations.css">
+    <style>
+        .skill-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #FFFACD 0%, #FFE680 50%, #FFFEF0 100%);
+            padding: 60px 20px;
+        }
+        .skill-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .back-button {
+            display: inline-block;
+            margin-bottom: 40px;
+            padding: 12px 30px;
+            border: 2px solid #FF8C00;
+            color: #FF8C00;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+        .back-button:hover {
+            background: #FF8C00;
+            color: #FFFFFF;
+        }
+        .skill-title {
+            font-size: clamp(40px, 10vw, 80px);
+            font-weight: 900;
+            margin-bottom: 30px;
+            color: #FF8C00;
+        }
+        .skill-description {
+            font-size: 20px;
+            color: #1a1a1a;
+            line-height: 1.8;
+            margin-bottom: 60px;
+        }
+        .demo-section {
+            padding: 60px 40px;
+            background: rgba(255, 255, 255, 0.6);
+            border: 2px solid rgba(255, 140, 0, 0.3);
+            border-radius: 12px;
+        }
+        .demo-title {
+            font-size: 24px;
+            color: #FF8C00;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        /* Mini Project: Drawing Canvas */
+        .canvas-demo {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+        #drawingCanvas {
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            background: #0a0a0a;
+            cursor: crosshair;
+            display: block;
+        }
+        .canvas-controls {
+            display: flex;
+            gap: 15px;
+        }
+        .control-btn {
+            padding: 10px 20px;
+            border: 2px solid #667eea;
+            background: transparent;
+            color: #667eea;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        .control-btn:hover {
+            background: #667eea;
+            color: #0f0c29;
+        }
+        .color-picker {
+            padding: 8px 15px;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            background: transparent;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="skill-page">
+        <div class="skill-content">
+            <a href="../index.html" class="back-button">Back to Portfolio</a>
+            <h1 class="skill-title">Matplotlib</h1>
+            <p class="skill-description">Data visualization & graphics</p>
+            
+            <div class="demo-section">
+                <div class="demo-title">Real Matplotlib Examples</div>
+
+
+                <div class="canvas-demo">
+                    <div style="margin-bottom: 40px;">
+                        <h3 style="color: #FF8C00; margin-bottom: 20px; font-size: 18px;"> Line Plot - Data Trends</h3>
+                        <canvas id="lineChart" width="600" height="250"></canvas>
+                        <p style="color: #666; font-size: 14px; margin-top: 10px;">Visualizes trends over time using line plots - a fundamental matplotlib technique</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 40px;">
+                        <h3 style="color: #FF8C00; margin-bottom: 20px; font-size: 18px;"> Histogram - Distribution Analysis</h3>
+                        <canvas id="histogram" width="600" height="250"></canvas>
+                        <p style="color: #666; font-size: 14px; margin-top: 10px;">Shows frequency distribution of data using histograms - essential for statistical analysis</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 40px;">
+                        <h3 style="color: #FF8C00; margin-bottom: 20px; font-size: 18px;"> Scatter Plot - Correlation</h3>
+                        <canvas id="scatterChart" width="600" height="250"></canvas>
+                        <p style="color: #666; font-size: 14px; margin-top: 10px;">Displays relationship between two variables using scatter plots - useful for correlation analysis</p>
+                    </div>
+
+                    <div style="background: rgba(0,0,0,0.05); padding: 20px; border-radius: 8px; margin-top: 30px;">
+                        <h3 style="color: #FF8C00; margin-bottom: 15px; font-size: 16px;">Python Code Example:</h3>
+                        <pre style="background: #1a1a1a; color: #00ff00; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 12px; line-height: 1.5;">
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Line plot example
+x = np.linspace(0, 10, 100)
+y = np.sin(x)
+plt.plot(x, y, linewidth=2, label='sin(x)')
+
+# Histogram example
+data = np.random.normal(0, 1, 1000)
+plt.hist(data, bins=30, color='orange', alpha=0.7)
+
+# Scatter plot example
+x_scatter = np.random.randn(100)
+y_scatter = np.random.randn(100)
+plt.scatter(x_scatter, y_scatter, c='red', alpha=0.5)
+
+plt.xlabel('X Axis')
+plt.ylabel('Y Axis')
+plt.legend()
+plt.show()
+                        </pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Line Chart (Simulating matplotlib line plot)
+        function drawLineChart() {
+            const canvas = document.getElementById('lineChart');
+            const ctx = canvas.getContext('2d');
+            const padding = 40;
+            const width = canvas.width - 2 * padding;
+            const height = canvas.height - 2 * padding;
+            
+            // Data: simulating measurements over months
+            const data = [30, 45, 38, 62, 55, 78, 85, 72, 90, 88];
+            const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'];
+            
+            // Draw grid
+            ctx.strokeStyle = '#ddd';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 10; i++) {
+                const y = padding + (height * i) / 10;
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(padding + width, y);
+                ctx.stroke();
+            }
+            
+            // Draw axes
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            ctx.stroke();
+            
+            // Draw axis labels
+            ctx.fillStyle = '#666';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+            for (let i = 0; i < labels.length; i++) {
+                const x = padding + (width * (i + 0.5)) / labels.length;
+                ctx.fillText(labels[i], x, canvas.height - padding + 25);
+            }
+            
+            // Y-axis labels
+            ctx.textAlign = 'right';
+            for (let i = 0; i <= 10; i++) {
+                const y = padding + (height * (10 - i)) / 10;
+                const value = i * 10;
+                ctx.fillText(value, padding - 10, y + 5);
+            }
+            
+            // Draw line plot
+            ctx.strokeStyle = '#FF8C00';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            
+            const maxValue = Math.max(...data);
+            for (let i = 0; i < data.length; i++) {
+                const x = padding + (width * (i + 0.5)) / data.length;
+                const y = canvas.height - padding - (height * data[i]) / (maxValue + 10);
+                
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+            
+            // Draw data points
+            ctx.fillStyle = '#FF8C00';
+            for (let i = 0; i < data.length; i++) {
+                const x = padding + (width * (i + 0.5)) / data.length;
+                const y = canvas.height - padding - (height * data[i]) / (maxValue + 10);
+                ctx.beginPath();
+                ctx.arc(x, y, 4, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+        
+        // Histogram (Frequency distribution)
+        function drawHistogram() {
+            const canvas = document.getElementById('histogram');
+            const ctx = canvas.getContext('2d');
+            const padding = 40;
+            const width = canvas.width - 2 * padding;
+            const height = canvas.height - 2 * padding;
+            
+            // Simulated data: frequency in different ranges
+            const data = [15, 28, 45, 62, 48, 35, 18, 8];
+            const labels = ['0-10', '10-20', '20-30', '30-40', '40-50', '50-60', '60-70', '70-80'];
+            const maxFreq = Math.max(...data);
+            
+            // Draw axes
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            ctx.stroke();
+            
+            // Draw bars
+            const barWidth = width / (data.length * 1.5);
+            ctx.fillStyle = '#FF8C00';
+            
+            for (let i = 0; i < data.length; i++) {
+                const x = padding + (i * barWidth * 1.5) + 20;
+                const barHeight = (height * data[i]) / maxFreq;
+                const y = canvas.height - padding - barHeight;
+                
+                ctx.fillRect(x, y, barWidth, barHeight);
+            }
+            
+            // Draw labels
+            ctx.fillStyle = '#666';
+            ctx.font = '11px Arial';
+            ctx.textAlign = 'center';
+            for (let i = 0; i < labels.length; i++) {
+                const x = padding + (i * barWidth * 1.5) + 20 + barWidth / 2;
+                ctx.fillText(labels[i], x, canvas.height - padding + 25);
+            }
+            
+            // Y-axis labels
+            ctx.textAlign = 'right';
+            for (let i = 0; i <= 5; i++) {
+                const y = padding + (height * (5 - i)) / 5;
+                const value = Math.round((i * maxFreq) / 5);
+                ctx.fillText(value, padding - 10, y + 5);
+            }
+        }
+        
+        // Scatter Plot (Correlation visualization)
+        function drawScatterPlot() {
+            const canvas = document.getElementById('scatterChart');
+            const ctx = canvas.getContext('2d');
+            const padding = 40;
+            const width = canvas.width - 2 * padding;
+            const height = canvas.height - 2 * padding;
+            
+            // Generate scatter data
+            const points = [];
+            for (let i = 0; i < 30; i++) {
+                points.push({
+                    x: Math.random() * 100,
+                    y: Math.random() * 100
+                });
+            }
+            
+            // Draw grid
+            ctx.strokeStyle = '#ddd';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 10; i++) {
+                const y = padding + (height * i) / 10;
+                const x = padding + (width * i) / 10;
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(padding + width, y);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(x, padding);
+                ctx.lineTo(x, canvas.height - padding);
+                ctx.stroke();
+            }
+            
+            // Draw axes
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            ctx.stroke();
+            
+            // Draw points
+            ctx.fillStyle = '#FF8C00';
+            ctx.globalAlpha = 0.7;
+            for (let point of points) {
+                const x = padding + (width * point.x) / 100;
+                const y = canvas.height - padding - (height * point.y) / 100;
+                ctx.beginPath();
+                ctx.arc(x, y, 5, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            ctx.globalAlpha = 1;
+            
+            // Axis labels
+            ctx.fillStyle = '#666';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('X Variable', canvas.width / 2, canvas.height - 10);
+            
+            ctx.textAlign = 'right';
+            ctx.save();
+            ctx.translate(10, canvas.height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('Y Variable', 0, 0);
+            ctx.restore();
+        }
+        
+        // Initialize charts
+        window.addEventListener('load', () => {
+            drawLineChart();
+            drawHistogram();
+            drawScatterPlot();
+        });
+    </script>
+</body>
+<script>
+    (function(){ try{ const t=localStorage.getItem('theme'); if(t==='dark') document.documentElement.setAttribute('data-theme','dark'); }catch(e){} })();
+</script>
+</html>
+
+

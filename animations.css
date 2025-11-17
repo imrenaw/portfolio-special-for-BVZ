@@ -1,0 +1,172 @@
+/* BVZ Letter Animations */
+@keyframes letterFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(100px) scale(0.5) rotateX(90deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1) rotateX(0deg);
+    }
+}
+
+@keyframes letterGlow {
+    0%, 100% {
+        text-shadow: 0 0 30px rgba(255, 140, 0, 0.9), 0 0 60px rgba(255, 215, 0, 0.5);
+    }
+    50% {
+        text-shadow: 0 0 60px rgba(255, 140, 0, 1), 0 0 120px rgba(255, 165, 0, 0.9), 0 0 180px rgba(255, 215, 0, 0.7);
+    }
+}
+
+/* Initial letter animation on page load - ONLY ONCE */
+.bvz-letter {
+    display: inline-block;
+    transform: translateY(100px) scale(0.5) rotateX(90deg);
+}
+
+body.loaded .bvz-letter:nth-child(1) {
+    animation: letterFadeIn 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+body.loaded .bvz-letter:nth-child(2) {
+    animation: letterFadeIn 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards;
+}
+
+body.loaded .bvz-letter:nth-child(3) {
+    animation: letterFadeIn 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 0.6s forwards;
+}
+
+/* Hover effect on letters - NO GLOW */
+.bvz-title:hover .bvz-letter {
+    transition: text-shadow 0.3s ease-in-out;
+}
+
+.bvz-title:not(:hover) .bvz-letter {
+    text-shadow: none;
+    transition: text-shadow 0.3s ease-in-out;
+}
+
+/* Scroll-triggered animations */
+@keyframes slideInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeUp {
+    0% {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Default state - hidden */
+.section-title,
+.about-text,
+.about-stats,
+.skill-card,
+.project-card {
+    opacity: 0;
+}
+
+/* Apply animations when visible */
+.section-title.animate {
+    animation: fadeUp 0.8s ease-out forwards;
+}
+
+.about-text.animate {
+    animation: fadeUp 0.8s ease-out forwards;
+}
+
+.about-stats.animate {
+    animation: fadeUp 0.8s ease-out forwards;
+}
+
+.skill-card.animate {
+    animation: fadeUp 0.6s ease-out forwards;
+}
+
+.skill-card:nth-child(1).animate {
+    animation-delay: 0s;
+}
+
+.skill-card:nth-child(2).animate {
+    animation-delay: 0.1s;
+}
+
+.skill-card:nth-child(3).animate {
+    animation-delay: 0.2s;
+}
+
+.skill-card:nth-child(4).animate {
+    animation-delay: 0.1s;
+}
+
+.skill-card:nth-child(5).animate {
+    animation-delay: 0.2s;
+}
+
+.skill-card:nth-child(6).animate {
+    animation-delay: 0.3s;
+}
+
+.project-card.animate {
+    animation: fadeUp 0.6s ease-out forwards;
+}
+
+.project-card:nth-child(1).animate {
+    animation-delay: 0s;
+}
+
+.project-card:nth-child(2).animate {
+    animation-delay: 0.15s;
+}
+
+.project-card:nth-child(3).animate {
+    animation-delay: 0.3s;
+}
+
+
+@keyframes letterFloat {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}

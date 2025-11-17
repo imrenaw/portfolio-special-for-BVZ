@@ -1,0 +1,29 @@
+{
+  "name": "bvz-portfolio",
+  "version": "1.0.0",
+  "description": "A modern portfolio website for BVZ featuring impressive animations and a dark color palette.",
+  "main": "src/index.html",
+  "scripts": {
+    "start": "live-server src",
+    "build": "echo 'Build process can be defined here'",
+    "test": "echo 'No tests specified'"
+  },
+  "keywords": [
+    "portfolio",
+    "website",
+    "bvz",
+    "animations",
+    "dark theme"
+  ],
+  "author": "Vladyslav Zalotov",
+  "license": "MIT",
+  "dependencies": {
+    "live-server": "^1.2.1"
+  },
+  "devDependencies": {},
+  "homepage": "https://your-portfolio-url.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/bvz-portfolio.git"
+  }
+}

@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java - BVZ Portfolio</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../animations.css">
+    <style>
+        .skill-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #FFFACD 0%, #FFE680 50%, #FFFEF0 100%);
+            padding: 60px 20px;
+        }
+        .skill-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .back-button {
+            display: inline-block;
+            margin-bottom: 40px;
+            padding: 12px 30px;
+            border: 2px solid #FF8C00;
+            color: #FF8C00;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+        .back-button:hover {
+            background: #FF8C00;
+            color: #FFFFFF;
+        }
+        .skill-title {
+            font-size: clamp(40px, 10vw, 80px);
+            font-weight: 900;
+            margin-bottom: 30px;
+            color: #FF8C00;
+        }
+        .skill-description {
+            font-size: 20px;
+            color: #1a1a1a;
+            line-height: 1.8;
+            margin-bottom: 60px;
+        }
+        .demo-section {
+            padding: 60px 40px;
+            background: rgba(255, 255, 255, 0.6);
+            border: 2px solid rgba(255, 140, 0, 0.3);
+            border-radius: 12px;
+            margin-bottom: 40px;
+        }
+        .demo-title {
+            font-size: 24px;
+            color: #FF8C00;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .code-example {
+            background: #1a1a1a;
+            color: #00ff00;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+        .interactive-demo {
+            background: rgba(255, 140, 0, 0.1);
+            border: 2px solid rgba(255, 140, 0, 0.3);
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+        }
+        .demo-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .demo-input {
+            padding: 10px 15px;
+            border: 2px solid #FF8C00;
+            background: white;
+            color: #333;
+            border-radius: 8px;
+            font-size: 14px;
+            flex: 1;
+            min-width: 150px;
+        }
+        .demo-button {
+            padding: 10px 25px;
+            background: #FF8C00;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .demo-button:hover {
+            background: #FF7700;
+            transform: scale(1.05);
+        }
+        .output-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #FF8C00;
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #333;
+        }
+        .output-box h4 {
+            margin-top: 0;
+            color: #FF8C00;
+        }
+        .tree-viz {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            font-family: monospace;
+            font-size: 14px;
+            line-height: 1.8;
+            color: #333;
+        }
+        .algorithm-section {
+            background: rgba(255, 140, 0, 0.05);
+            padding: 25px;
+            border-radius: 8px;
+            margin: 25px 0;
+            border-left: 4px solid #FF8C00;
+        }
+        .algorithm-section h3 {
+            color: #FF8C00;
+            margin-top: 0;
+        }
+        .complexity-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .complexity-box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #FFD700;
+        }
+        .complexity-box strong {
+            color: #FF8C00;
+        }
+    </style>
+</head>
+<body>
+    <div class="skill-page">
+        <div class="skill-content">
+            <a href="../index.html" class="back-button">← Back to Portfolio</a>
+            <h1 class="skill-title">Java</h1>
+            <p class="skill-description">Object-Oriented Programming & Algorithms</p>
+            
+            <div class="demo-section">
+                <div class="demo-title">🌳 Binary Search Tree Implementation</div>
+                <p style="font-size: 16px; color: #333; line-height: 1.8; margin-bottom: 20px;">
+                    A Binary Search Tree (BST) is a fundamental data structure that maintains sorted data while providing efficient 
+                    search, insertion, and deletion operations. This is a complete implementation with in-order traversal.
+                </p>
+
+                <div class="complexity-info">
+                    <div class="complexity-box">
+                        <strong>Search:</strong> O(log n) average, O(n) worst
+                    </div>
+                    <div class="complexity-box">
+                        <strong>Insert:</strong> O(log n) average, O(n) worst
+                    </div>
+                    <div class="complexity-box">
+                        <strong>Delete:</strong> O(log n) average, O(n) worst
+                    </div>
+                    <div class="complexity-box">
+                        <strong>Space:</strong> O(n) for n nodes
+                    </div>
+                </div>
+
+                <div class="code-example">
+public class BinarySearchTree {
+    private Node root;
+
+    private class Node {
+        int data;
+        Node left, right;
+
+        Node(int data) {
+            this.data = data;
+        }
+    }
+
+    // Insert a value into the BST
+    public void insert(int value) {
+        root = insertRec(root, value);
+    }
+
+    private Node insertRec(Node node, int value) {
+        if (node == null) {
+            return new Node(value);
+        }
+
+        if (value < node.data) {
+            node.left = insertRec(node.left, value);
+        } else if (value > node.data) {
+            node.right = insertRec(node.right, value);
+        }
+        return node;
+    }
+
+    // Search for a value
+    public boolean search(int value) {
+        return searchRec(root, value);
+    }
+
+    private boolean searchRec(Node node, int value) {
+        if (node == null) {
+            return false;
+        }
+
+        if (value == node.data) {
+            return true;
+        } else if (value < node.data) {
+            return searchRec(node.left, value);
+        } else {
+            return searchRec(node.right, value);
+        }
+    }
+
+    // In-order traversal (Left, Root, Right) - gives sorted order
+    public void inOrder() {
+        inOrderRec(root);
+        System.out.println();
+    }
+
+    private void inOrderRec(Node node) {
+        if (node != null) {
+            inOrderRec(node.left);
+            System.out.print(node.data + " ");
+            inOrderRec(node.right);
+        }
+    }
+
+    // Delete a node from BST
+    public void delete(int value) {
+        root = deleteRec(root, value);
+    }
+
+    private Node deleteRec(Node node, int value) {
+        if (node == null) {
+            return null;
+        }
+
+        if (value < node.data) {
+            node.left = deleteRec(node.left, value);
+        } else if (value > node.data) {
+            node.right = deleteRec(node.right, value);
+        } else {
+            // Node with no children
+            if (node.left == null && node.right == null) {
+                return null;
+            }
+            // Node with one child
+            if (node.left == null) {
+                return node.right;
+            }
+            if (node.right == null) {
+                return node.left;
+            }
+            // Node with two children: find in-order successor
+            Node minLarger = node.right;
+            while (minLarger.left != null) {
+                minLarger = minLarger.left;
+            }
+            node.data = minLarger.data;
+            node.right = deleteRec(node.right, minLarger.data);
+        }
+        return node;
+    }
+
+    // Calculate tree height
+    public int height() {
+        return heightRec(root);
+    }
+
+    private int heightRec(Node node) {
+        if (node == null) {
+            return -1;
+        }
+        return 1 + Math.max(heightRec(node.left), heightRec(node.right));
+    }
+}
+                </div>
+
+                <div class="interactive-demo">
+                    <h3 style="margin-top: 0; color: #FF8C00;">🎮 Interactive BST Demo</h3>
+                    <div class="demo-controls">
+                        <input type="number" id="insertValue" class="demo-input" placeholder="Enter value to insert" min="1" max="100">
+                        <button class="demo-button" onclick="insertValue()">Insert</button>
+                        <button class="demo-button" onclick="deleteValue()">Delete</button>
+                        <button class="demo-button" onclick="searchValue()">Search</button>
+                        <button class="demo-button" onclick="resetTree()" style="background: #666;">Reset</button>
+                    </div>
+                    <div class="output-box">
+                        <h4>In-Order Traversal Output:</h4>
+                        <div id="output">Empty tree</div>
+                    </div>
+                    <div class="tree-viz" id="treeViz"></div>
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <div class="demo-title">🔀 Merge Sort Algorithm</div>
+                <p style="font-size: 16px; color: #333; line-height: 1.8; margin-bottom: 20px;">
+                    Merge Sort is a divide-and-conquer algorithm that guarantees O(n log n) time complexity in all cases. 
+                    It's stable and widely used for sorting large datasets.
+                </p>
+
+                <div class="complexity-info">
+                    <div class="complexity-box">
+                        <strong>Time:</strong> O(n log n) all cases
+                    </div>
+                    <div class="complexity-box">
+                        <strong>Space:</strong> O(n) extra space
+                    </div>
+                    <div class="complexity-box">
+                        <strong>Stable:</strong> Yes
+                    </div>
+                    <div class="complexity-box">
+                        <strong>In-Place:</strong> No
+                    </div>
+                </div>
+
+                <div class="code-example">
+public class MergeSort {
+    public static void mergeSort(int[] arr) {
+        if (arr.length <= 1) {
+            return;
+        }
+        mergeSortRec(arr, 0, arr.length - 1);
+    }
+
+    private static void mergeSortRec(int[] arr, int left, int right) {
+        if (left < right) {
+            int mid = left + (right - left) / 2;
+            // Sort left half
+            mergeSortRec(arr, left, mid);
+            // Sort right half
+            mergeSortRec(arr, mid + 1, right);
+            // Merge the sorted halves
+            merge(arr, left, mid, right);
+        }
+    }
+
+    private static void merge(int[] arr, int left, int mid, int right) {
+        int[] temp = new int[right - left + 1];
+        int i = left, j = mid + 1, k = 0;
+
+        // Merge two sorted arrays
+        while (i <= mid && j <= right) {
+            if (arr[i] <= arr[j]) {
+                temp[k++] = arr[i++];
+            } else {
+                temp[k++] = arr[j++];
+            }
+        }
+
+        // Copy remaining elements
+        while (i <= mid) {
+            temp[k++] = arr[i++];
+        }
+        while (j <= right) {
+            temp[k++] = arr[j++];
+        }
+
+        // Copy back to original array
+        System.arraycopy(temp, 0, arr, left, temp.length);
+    }
+
+    // Example usage
+    public static void main(String[] args) {
+        int[] arr = {64, 34, 25, 12, 22, 11, 90};
+        mergeSort(arr);
+        System.out.println(Arrays.toString(arr)); 
+        // Output: [11, 12, 22, 25, 34, 64, 90]
+    }
+}
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <div class="demo-title">📋 Key Java Concepts</div>
+                
+                <div class="algorithm-section">
+                    <h3>Object-Oriented Programming</h3>
+                    <p>Java is built on OOP principles: <strong>Encapsulation</strong>, <strong>Inheritance</strong>, 
+                    <strong>Polymorphism</strong>, and <strong>Abstraction</strong>. These principles help create maintainable 
+                    and scalable code.</p>
+                </div>
+
+                <div class="algorithm-section">
+                    <h3>Collections Framework</h3>
+                    <p>Java provides powerful data structures through the Collections framework: 
+                    <strong>ArrayList</strong>, <strong>HashMap</strong>, <strong>HashSet</strong>, <strong>LinkedList</strong>, 
+                    <strong>PriorityQueue</strong>, and more. Understanding when to use each is crucial for performance.</p>
+                </div>
+
+                <div class="algorithm-section">
+                    <h3>Exception Handling</h3>
+                    <p>Java's robust exception handling with <strong>try-catch-finally</strong> blocks ensures graceful 
+                    error management. Checked and unchecked exceptions provide flexibility in error handling strategies.</p>
+                </div>
+
+                <div class="algorithm-section">
+                    <h3>Multithreading & Concurrency</h3>
+                    <p>Java's built-in threading support allows concurrent execution. The <strong>java.util.concurrent</strong> 
+                    package provides tools for managing threads safely and efficiently.</p>
+                </div>
+
+                <div class="algorithm-section">
+                    <h3>Design Patterns</h3>
+                    <p>Common patterns like <strong>Singleton</strong>, <strong>Factory</strong>, <strong>Observer</strong>, 
+                    and <strong>Strategy</strong> are frequently used in Java applications to solve recurring design problems.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class BST {
+            constructor() {
+                this.root = null;
+            }
+
+            insert(value) {
+                if (this.root === null) {
+                    this.root = { data: value, left: null, right: null };
+                } else {
+                    this._insertRec(this.root, value);
+                }
+            }
+
+            _insertRec(node, value) {
+                if (value < node.data) {
+                    if (node.left === null) {
+                        node.left = { data: value, left: null, right: null };
+                    } else {
+                        this._insertRec(node.left, value);
+                    }
+                } else if (value > node.data) {
+                    if (node.right === null) {
+                        node.right = { data: value, left: null, right: null };
+                    } else {
+                        this._insertRec(node.right, value);
+                    }
+                }
+            }
+
+            inOrder() {
+                let result = [];
+                this._inOrderRec(this.root, result);
+                return result;
+            }
+
+            _inOrderRec(node, result) {
+                if (node !== null) {
+                    this._inOrderRec(node.left, result);
+                    result.push(node.data);
+                    this._inOrderRec(node.right, result);
+                }
+            }
+
+            search(value) {
+                return this._searchRec(this.root, value);
+            }
+
+            _searchRec(node, value) {
+                if (node === null) {
+                    return false;
+                }
+                if (value === node.data) {
+                    return true;
+                } else if (value < node.data) {
+                    return this._searchRec(node.left, value);
+                } else {
+                    return this._searchRec(node.right, value);
+                }
+            }
+
+            delete(value) {
+                this.root = this._deleteRec(this.root, value);
+            }
+
+            _deleteRec(node, value) {
+                if (node === null) {
+                    return null;
+                }
+
+                if (value < node.data) {
+                    node.left = this._deleteRec(node.left, value);
+                } else if (value > node.data) {
+                    node.right = this._deleteRec(node.right, value);
+                } else {
+                    if (node.left === null && node.right === null) {
+                        return null;
+                    }
+                    if (node.left === null) {
+                        return node.right;
+                    }
+                    if (node.right === null) {
+                        return node.left;
+                    }
+                    
+                    let minLarger = node.right;
+                    while (minLarger.left !== null) {
+                        minLarger = minLarger.left;
+                    }
+                    node.data = minLarger.data;
+                    node.right = this._deleteRec(node.right, minLarger.data);
+                }
+                return node;
+            }
+        }
+
+        let bst = new BST();
+        bst.insert(50);
+        bst.insert(30);
+        bst.insert(70);
+        bst.insert(20);
+        bst.insert(40);
+        bst.insert(60);
+        bst.insert(80);
+
+        function updateOutput() {
+            const values = bst.inOrder();
+            document.getElementById('output').textContent = values.length === 0 ? 'Empty tree' : values.join(' → ');
+            visualizeTree();
+        }
+
+        function insertValue() {
+            const value = parseInt(document.getElementById('insertValue').value);
+            if (!isNaN(value) && value >= 1 && value <= 100) {
+                bst.insert(value);
+                updateOutput();
+                document.getElementById('insertValue').value = '';
+            } else {
+                alert('Please enter a number between 1 and 100');
+            }
+        }
+
+        function deleteValue() {
+            const value = parseInt(document.getElementById('insertValue').value);
+            if (!isNaN(value)) {
+                bst.delete(value);
+                updateOutput();
+                document.getElementById('insertValue').value = '';
+            }
+        }
+
+        function searchValue() {
+            const value = parseInt(document.getElementById('insertValue').value);
+            if (!isNaN(value)) {
+                const found = bst.search(value);
+                alert(found ? `✓ Value ${value} found in tree!` : `✗ Value ${value} not found in tree`);
+            }
+        }
+
+        function resetTree() {
+            bst = new BST();
+            bst.insert(50);
+            bst.insert(30);
+            bst.insert(70);
+            bst.insert(20);
+            bst.insert(40);
+            bst.insert(60);
+            bst.insert(80);
+            updateOutput();
+        }
+
+        function visualizeTree() {
+            const viz = document.getElementById('treeViz');
+            if (bst.root === null) {
+                viz.textContent = 'Tree is empty';
+                return;
+            }
+            
+            let visualization = '';
+            let level = 0;
+            const queue = [{node: bst.root, level: 0, position: 'root'}];
+            let currentLevel = -1;
+
+            while (queue.length > 0) {
+                const {node, level: lv} = queue.shift();
+                if (lv !== currentLevel) {
+                    if (currentLevel !== -1) visualization += '<br>';
+                    currentLevel = lv;
+                }
+                
+                visualization += `[${node.data}] `;
+                
+                if (node.left) queue.push({node: node.left, level: lv + 1});
+                if (node.right) queue.push({node: node.right, level: lv + 1});
+            }
+
+            viz.innerHTML = '📊 Tree Structure (Level Order):<br>' + visualization;
+        }
+
+        updateOutput();
+    </script>
+</body>
+</html>

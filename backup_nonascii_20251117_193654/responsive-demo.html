@@ -1,0 +1,245 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Design Demo - BVZ Portfolio</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../animations.css">
+    <style>
+        .skill-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #FFFACD 0%, #FFE680 50%, #FFFEF0 100%);
+            padding: 60px 20px;
+        }
+        .skill-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .back-button {
+            display: inline-block;
+            margin-bottom: 40px;
+            padding: 12px 30px;
+            border: 2px solid #FF8C00;
+            color: #FF8C00;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+        .back-button:hover {
+            background: #FF8C00;
+            color: #FFFFFF;
+        }
+        .skill-title {
+            font-size: clamp(40px, 10vw, 80px);
+            font-weight: 900;
+            margin-bottom: 30px;
+            color: #FF8C00;
+        }
+        .skill-description {
+            font-size: 20px;
+            color: #1a1a1a;
+            line-height: 1.8;
+            margin-bottom: 60px;
+        }
+        .demo-section {
+            padding: 60px 40px;
+            background: rgba(255, 255, 255, 0.6);
+            border: 2px solid rgba(255, 140, 0, 0.3);
+            border-radius: 12px;
+        }
+        .demo-title {
+            font-size: 24px;
+            color: #FF8C00;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .code-example {
+            background: #1a1a1a;
+            color: #00ff00;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        .responsive-demo {
+            background: #f5f5f5;
+            border: 2px dashed #FF8C00;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 30px 0;
+        }
+        .responsive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            padding: 20px;
+        }
+        .responsive-item {
+            background: linear-gradient(135deg, #FFD700, #FF8C00);
+            padding: 20px;
+            border-radius: 8px;
+            color: white;
+            text-align: center;
+            font-weight: 600;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .technique-box {
+            background: rgba(255, 140, 0, 0.1);
+            border-left: 4px solid #FF8C00;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .technique-box h3 {
+            color: #FF8C00;
+            margin-top: 0;
+        }
+        /* Project preview styling */
+        .project-preview {
+            display:flex; gap:18px; align-items:center; padding:16px; border-radius:10px; margin:20px 0; background:linear-gradient(90deg, rgba(255,140,0,0.05), rgba(255,140,0,0.02));
+            border:1px solid rgba(255,140,0,0.06);
+        }
+        .mock-screen{ width:260px; height:150px; border-radius:8px; background:linear-gradient(135deg,#fff,#f7f7f7); display:flex; align-items:center; justify-content:center; font-weight:700 }
+        .project-actions{ display:flex; gap:12px }
+        .btn{ padding:8px 14px; border-radius:8px; border:2px solid #FF8C00; background:#FF8C00; color:#fff; text-decoration:none; font-weight:700 }
+        .btn.ghost{ background:transparent; color:#FF8C00 }
+    </style>
+</head>
+<body>
+    <div class="skill-page">
+        <div class="skill-content">
+            <a href="html-css.html" class="back-button">Back</a>
+            <h1 class="skill-title">Responsive Design</h1>
+            <p class="skill-description">Building websites that work on all devices</p>
+            
+            <div class="demo-section">
+                <div class="demo-title">What is Responsive Design?</div>
+                <p style="font-size: 16px; color: #333; line-height: 1.8; margin-bottom: 30px;">
+                    Responsive design ensures websites look good and function properly on all devices - 
+                    desktop computers, tablets, and smartphones. It adapts to different screen sizes using 
+                    flexible layouts, media queries, and flexible images.
+                </p>
+
+                <h3 style="color: #FF8C00; margin-bottom: 20px; font-size: 20px;">рџ“± Interactive Demo - Resize your window!</h3>
+
+                <div class="project-preview">
+                    <div class="mock-screen">Responsive Preview</div>
+                    <div>
+                        <h4 style="margin:0 0 8px 0; color:#FF8C00">Responsive Grid Showcase</h4>
+                        <p style="margin:0 0 10px;color:#333">This demo demonstrates a fluid grid using <code>auto-fit</code> and <code>minmax</code>.</p>
+                        <div class="project-actions">
+                            <a class="btn" href="../projects/white-spirit.html">Open Project</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="responsive-demo">
+                    <div class="responsive-grid">
+                        <div class="responsive-item">Box 1</div>
+                        <div class="responsive-item">Box 2</div>
+                        <div class="responsive-item">Box 3</div>
+                        <div class="responsive-item">Box 4</div>
+                    </div>
+                </div>
+
+                <div class="technique-box">
+                    <h3>1. Mobile-First Approach</h3>
+                    <p>Start designing for mobile devices, then enhance for larger screens. This ensures better performance and user experience on smaller devices.</p>
+                </div>
+
+                <div class="technique-box">
+                    <h3>2. Flexible Grid Layouts</h3>
+                    <p>Use CSS Grid or Flexbox to create layouts that adapt to screen size. The code above uses <code>auto-fit</code> and <code>minmax</code> for fluid layouts.</p>
+                </div>
+
+                <div class="code-example">
+/* Mobile First - Base styles for small screens */
+.container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+}
+
+/* Tablet - Medium screens */
+@media (min-width: 768px) {
+  .container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Desktop - Large screens */
+@media (min-width: 1024px) {
+  .container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+                </div>
+
+                <div class="technique-box">
+                    <h3>3. Flexible Images & Media</h3>
+                    <p>Images should scale with their containing elements. Use <code>max-width: 100%</code> and <code>height: auto</code> to ensure responsive images.</p>
+                </div>
+
+                <div class="code-example">
+/* Responsive image example */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Responsive video (16:9 aspect ratio) */
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+                </div>
+
+                <div class="technique-box">
+                    <h3>4. Media Queries</h3>
+                    <p>CSS media queries apply styles based on device characteristics like width, height, and orientation. They're essential for responsive design.</p>
+                </div>
+
+                <h3 style="color: #FF8C00; margin-top: 40px; margin-bottom: 20px; font-size: 20px;">Common Breakpoints:</h3>
+                <ul style="color: #333; font-size: 16px; line-height: 2;">
+                    <li><strong>Mobile:</strong> 320px - 480px</li>
+                    <li><strong>Tablet:</strong> 481px - 768px</li>
+                    <li><strong>Desktop:</strong> 769px - 1024px</li>
+                    <li><strong>Large Desktop:</strong> 1025px+</li>
+                </ul>
+
+                <h3 style="color: #FF8C00; margin-top: 30px; margin-bottom: 20px; font-size: 20px;">Benefits:</h3>
+                <ul style="color: #333; font-size: 16px; line-height: 2;">
+                    <li>вњ… One website for all devices</li>
+                    <li>вњ… Better user experience across platforms</li>
+                    <li>вњ… Improved SEO rankings</li>
+                    <li>вњ… Easier maintenance</li>
+                    <li>вњ… Cost-effective solution</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    (function(){ try{ const t=localStorage.getItem('theme'); if(t==='dark') document.documentElement.setAttribute('data-theme','dark'); }catch(e){} })();
+</script>
+</html>
+

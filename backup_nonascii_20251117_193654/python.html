@@ -1,0 +1,309 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python - BVZ Portfolio</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../animations.css">
+    <style>
+        .skill-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #FFFACD 0%, #FFE680 50%, #FFFEF0 100%);
+            padding: 60px 20px;
+        }
+        .skill-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .back-button {
+            display: inline-block;
+            margin-bottom: 40px;
+            padding: 12px 30px;
+            border: 2px solid #FF8C00;
+            color: #FF8C00;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+        .back-button:hover {
+            background: #FF8C00;
+            color: #FFFFFF;
+        }
+        .skill-title {
+            font-size: clamp(40px, 10vw, 80px);
+            font-weight: 900;
+            margin-bottom: 30px;
+            color: #FF8C00;
+        }
+        .skill-description {
+            font-size: 20px;
+            color: #1a1a1a;
+            line-height: 1.8;
+            margin-bottom: 60px;
+        }
+        .demo-section {
+            padding: 60px 40px;
+            background: rgba(255, 255, 255, 0.6);
+            border: 2px solid rgba(255, 140, 0, 0.3);
+            border-radius: 12px;
+        }
+        .demo-title {
+            font-size: 24px;
+            color: #FF8C00;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        /* Mini Project: Python Code Simulator */
+        .code-demo {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        .code-editor {
+            background: #2a2a2a;
+            border: 2px solid #FF8C00;
+            border-radius: 10px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            color: #FFD700;
+            font-size: 14px;
+            line-height: 1.6;
+            max-height: 250px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            tab-size: 4;
+        }
+        .code-output {
+            background: #2a2a2a;
+            border: 2px solid #FF8C00;
+            border-radius: 10px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            color: #FFD700;
+            font-size: 14px;
+            line-height: 1.8;
+            min-height: 120px;
+            white-space: pre-wrap;
+            tab-size: 4;
+        }
+        .run-btn {
+            padding: 15px 40px;
+            font-size: 18px;
+            border: 2px solid #FF8C00;
+            background: transparent;
+            color: #FF8C00;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            align-self: center;
+        }
+        .run-btn:hover {
+            background: #FF8C00;
+            color: #FFFFFF;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="skill-page">
+        <div class="skill-content">
+            <a href="../index.html" class="back-button">Back to Portfolio</a>
+            <h1 class="skill-title">Python</h1>
+            <p class="skill-description">Backend development & automation</p>
+
+            
+            <div class="demo-section">
+                <div class="demo-title">Python Code Simulator</div>
+                <div class="code-demo">
+                    <div class="code-editor" id="codeEditor"></div>
+                    <button class="run-btn" onclick="runCode()">Run Code</button>
+                    <div class="code-output" id="codeOutput">Output will appear here...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const code = `import random
+from queue import Queue
+
+N = 10
+
+def generate_field(size):
+    field = [[0 if random.random() > 0.2 else 1 for _ in range(size)] for _ in range(size)]
+    field[0][0] = 0
+    field[size-1][size-1] = 0
+    return field
+
+def print_field(field, path=None):
+    for i in range(len(field)):
+        row = ""
+        for j in range(len(field[i])):
+            if path and (i,j) in path:
+                row += "🟩"
+            elif field[i][j] == 0:
+                row += "⬜"
+            else:
+                row += "⬛"
+        print(row)
+    print("\n")
+
+def find_path(field, start=(0,0), goal=None):
+    if goal is None:
+        goal = (len(field)-1, len(field)-1)
+    queue = Queue()
+    queue.put(start)
+    visited = {start: None}
+
+    while not queue.empty():
+        current = queue.get()
+        if current == goal:
+            break
+        x, y = current
+        for dx, dy in [(-1,0),(1,0),(0,-1),(0,1)]:
+            nx, ny = x+dx, y+dy
+            if 0 <= nx < len(field) and 0 <= ny < len(field) and field[nx][ny] == 0:
+                if (nx, ny) not in visited:
+                    visited[(nx, ny)] = current
+                    queue.put((nx, ny))
+
+    if goal not in visited:
+        return None
+    path = []
+    cur = goal
+    while cur:
+        path.append(cur)
+        cur = visited[cur]
+    path.reverse()
+    return path
+
+def main():
+    field = generate_field(N)
+    print("Generated field:")
+    print_field(field)
+
+    path = find_path(field)
+    if path:
+        print("Path found (рџџ©):")
+        print_field(field, path)
+    else:
+        print("No path found!")
+
+if __name__ == "__main__":
+    main()`;
+
+        // Display code in the code editor
+        document.getElementById('codeEditor').textContent = code;
+
+        // JS simulation of the same algorithm so the Run button shows realistic output
+        function generateFieldJS(size){
+            const field = [];
+            for(let i=0;i<size;i++){
+                field[i]=[];
+                for(let j=0;j<size;j++){
+                    field[i][j] = (Math.random() > 0.2) ? 0 : 1;
+                }
+            }
+            field[0][0]=0;
+            field[size-1][size-1]=0;
+            return field;
+        }
+
+        function findPathJS(field, start=[0,0], goal=null){
+            const n = field.length;
+            if(!goal) goal = [n-1,n-1];
+            const q = [];
+            q.push(start);
+            const visited = new Map();
+            visited.set(start.join(","), null);
+
+            while(q.length){
+                const cur = q.shift();
+                if(cur[0]===goal[0] && cur[1]===goal[1]) break;
+                const dirs = [[-1,0],[1,0],[0,-1],[0,1]];
+                for(const d of dirs){
+                    const nx = cur[0]+d[0], ny = cur[1]+d[1];
+                    if(nx>=0 && nx<n && ny>=0 && ny<n && field[nx][ny]===0){
+                        const key = [nx,ny].join(",");
+                        if(!visited.has(key)){
+                            visited.set(key, cur.slice());
+                            q.push([nx,ny]);
+                        }
+                    }
+                }
+            }
+
+            const goalKey = goal.join(",");
+            if(!visited.has(goalKey)) return null;
+            const path = [];
+            let curKey = goalKey;
+            while(curKey){
+                const parts = curKey.split(",").map(Number);
+                path.push([parts[0],parts[1]]);
+                const parent = visited.get(curKey);
+                if(parent===null) break;
+                curKey = parent.join(",");
+            }
+            path.reverse();
+            return path;
+        }
+
+        function printFieldToString(field, path){
+            const n = field.length;
+            const pathSet = new Set();
+            if(path){
+                for(const p of path) pathSet.add(p.join(","));
+            }
+            let out = "";
+            for(let i=0;i<n;i++){
+                for(let j=0;j<n;j++){
+                    if(path && pathSet.has([i,j].join(","))) out += '🟩';
+                    else if(field[i][j]===0) out += '⬜';
+                    else out += '⬛';
+                }
+                out += "\n";
+            }
+            out += "\n";
+            return out;
+        }
+
+        function runCode(){
+            const output = document.getElementById('codeOutput');
+            output.textContent = 'Running simulation...\n\n';
+            const t0 = performance.now();
+            setTimeout(()=>{
+                const N = 10;
+                const field = generateFieldJS(N);
+                let text = 'Generated field:\n';
+                text += printFieldToString(field,null);
+                const path = findPathJS(field);
+                if(path){
+                    text += 'Path found (🟩):\n';
+                    text += printFieldToString(field,path);
+                } else {
+                    text += 'No path found!\n\n';
+                }
+                const t1 = performance.now();
+                const time = ((t1-t0)/1000).toFixed(3)+'s';
+                text += `Execution time: ${time}`;
+                output.textContent = text;
+                output.style.animation = 'fadeIn 0.35s ease';
+            }, 300);
+        }
+    </script>
+
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</body>
+<script>
+    (function(){ try{ const t=localStorage.getItem('theme'); if(t==='dark') document.documentElement.setAttribute('data-theme','dark'); }catch(e){} })();
+</script>
+</html>
+

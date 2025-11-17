@@ -1,0 +1,318 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Sorting Visualizer - BVZ Portfolio</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../animations.css">
+    <style>
+        .skill-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #FFFACD 0%, #FFE680 50%, #FFFEF0 100%);
+            padding: 60px 20px;
+        }
+
+        .skill-content {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 22px;
+            border: 2px solid #FF8C00;
+            color: #FF8C00;
+            text-decoration: none;
+            border-radius: 25px;
+        }
+
+        .skill-title {
+            font-size: clamp(36px, 8vw, 64px);
+            font-weight: 900;
+            color: #FF8C00;
+            margin: 10px 0 6px;
+        }
+
+        .skill-description {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
+        .control {
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 2px solid #FF8C00;
+            background: white;
+            cursor: pointer;
+        }
+
+        .control:disabled {
+            opacity: 0.6;
+            cursor: default;
+        }
+
+        .array-container {
+            width: 100%;
+            height: 380px;
+            background: rgba(0, 0, 0, 0.03);
+            border-radius: 8px;
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            padding: 12px;
+            box-sizing: border-box;
+        }
+
+        .bar {
+            background: linear-gradient(180deg, #FF8C00, #FFD700);
+            height: 50px;
+            border-radius: 4px 4px 0 0;
+            flex: 1 1 auto;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            color: #111;
+            font-weight: 700;
+        }
+
+        .bar.small {
+            font-size: 11px;
+        }
+
+        .bar.highlight {
+            background: #667eea;
+            color: #fff;
+        }
+
+        .label {
+            font-size: 12px;
+            color: #666;
+            margin-left: 6px;
+        }
+
+        .row {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .slider {
+            width: 160px;
+        }
+    </style>
+</head>
+<body>
+    <div class="skill-page">
+        <div class="skill-content">
+            <a href="../index.html" class="back-button">Back to Portfolio</a>
+            <h1 class="skill-title">JavaScript Sorting Visualizer</h1>
+            <p class="skill-description">Interactive visualization of sorting algorithms watch how arrays are rearranged step-by-step. Useful to demonstrate algorithmic thinking and front-end animation skills.</p>
+
+
+            <div class="controls">
+                <select id="algorithm" class="control">
+                    <option value="merge">Merge Sort</option>
+                    <option value="quick">Quick Sort</option>
+                </select>
+
+                <button id="newArray" class="control">Generate Array</button>
+                <button id="startBtn" class="control">Start</button>
+
+                <div class="row">
+                    <label class="label">Size</label>
+                    <input id="sizeSlider" type="range" min="10" max="120" value="40" class="slider">
+                </div>
+
+                <div class="row">
+                    <label class="label">Speed</label>
+                    <input id="speedSlider" type="range" min="1" max="100" value="40" class="slider">
+                </div>
+            </div>
+
+            <div id="arrayContainer" class="array-container" aria-hidden="false"></div>
+        </div>
+    </div>
+
+    <script>
+        // Utility
+        const arrayContainer = document.getElementById('arrayContainer');
+        const newArrayBtn = document.getElementById('newArray');
+        const startBtn = document.getElementById('startBtn');
+        const sizeSlider = document.getElementById('sizeSlider');
+        const speedSlider = document.getElementById('speedSlider');
+        const algorithmSelect = document.getElementById('algorithm');
+
+        let arr = [];
+        let isRunning = false;
+
+        function randInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function generateArray(n) {
+            arr = new Array(n).fill(0).map(() => randInt(10, 500));
+            renderArray();
+        }
+
+        function renderArray(highlights = []) {
+            arrayContainer.innerHTML = '';
+
+            const maxVal = Math.max(...arr, 1);
+            const size = arr.length;
+
+            for (let i = 0; i < size; i++) {
+                const val = arr[i];
+                const bar = document.createElement('div');
+                bar.className = 'bar' + (size > 80 ? ' small' : '');
+
+                if (highlights.includes(i)) {
+                    bar.classList.add('highlight');
+                }
+
+                bar.style.flex = `0 0 ${Math.max(2, 100 / size)}%`;
+                bar.style.height = `${(val / maxVal) * 100}%`;
+                bar.title = String(val);
+                arrayContainer.appendChild(bar);
+            }
+        }
+
+        function sleep(ms) {
+            return new Promise((res) => setTimeout(res, ms));
+        }
+
+        function getDelay() {
+            // map speedSlider (1..100) to delay ms (~150..2)
+            const v = parseInt(speedSlider.value, 10);
+            return Math.max(2, Math.round(150 - v * 1.4));
+        }
+
+        function disableControls() {
+            isRunning = true;
+            newArrayBtn.disabled = true;
+            startBtn.disabled = true;
+            sizeSlider.disabled = true;
+            speedSlider.disabled = true;
+            algorithmSelect.disabled = true;
+        }
+
+        function enableControls() {
+            isRunning = false;
+            newArrayBtn.disabled = false;
+            startBtn.disabled = false;
+            sizeSlider.disabled = false;
+            speedSlider.disabled = false;
+            algorithmSelect.disabled = false;
+        }
+
+        // Merge Sort (visualized via in-place writes)
+        async function mergeSort(start, end) {
+            if (start >= end) return;
+            const mid = Math.floor((start + end) / 2);
+            await mergeSort(start, mid);
+            await mergeSort(mid + 1, end);
+            await merge(start, mid, end);
+        }
+
+        async function merge(l, m, r) {
+            const left = arr.slice(l, m + 1);
+            const right = arr.slice(m + 1, r + 1);
+            let i = 0;
+            let j = 0;
+            let k = l;
+
+            while (i < left.length && j < right.length) {
+                if (left[i] <= right[j]) {
+                    arr[k] = left[i++];
+                } else {
+                    arr[k] = right[j++];
+                }
+                renderArray([k]);
+                await sleep(getDelay());
+                k++;
+            }
+
+            while (i < left.length) {
+                arr[k] = left[i++];
+                renderArray([k]);
+                await sleep(getDelay());
+                k++;
+            }
+
+            while (j < right.length) {
+                arr[k] = right[j++];
+                renderArray([k]);
+                await sleep(getDelay());
+                k++;
+            }
+        }
+
+        // Quick Sort
+        async function quickSort(low, high) {
+            if (low < high) {
+                const p = await partition(low, high);
+                await quickSort(low, p - 1);
+                await quickSort(p + 1, high);
+            }
+        }
+
+        async function partition(low, high) {
+            const pivot = arr[high];
+            let i = low;
+
+            for (let j = low; j < high; j++) {
+                if (arr[j] < pivot) {
+                    [arr[i], arr[j]] = [arr[j], arr[i]];
+                    renderArray([i, j]);
+                    await sleep(getDelay());
+                    i++;
+                }
+            }
+
+            [arr[i], arr[high]] = [arr[high], arr[i]];
+            renderArray([i, high]);
+            await sleep(getDelay());
+            return i;
+        }
+
+        // Runner
+        async function startSorting() {
+            disableControls();
+            const alg = algorithmSelect.value;
+
+            if (alg === 'merge') {
+                await mergeSort(0, arr.length - 1);
+            } else if (alg === 'quick') {
+                await quickSort(0, arr.length - 1);
+            }
+
+            renderArray([]);
+            enableControls();
+        }
+
+        // Events
+        newArrayBtn.addEventListener('click', () => generateArray(parseInt(sizeSlider.value, 10)));
+        sizeSlider.addEventListener('input', () => generateArray(parseInt(sizeSlider.value, 10)));
+        startBtn.addEventListener('click', () => {
+            if (!isRunning) startSorting();
+        });
+
+        // Init
+        generateArray(parseInt(sizeSlider.value, 10));
+    </script>
+</body>
+<script>
+    (function(){ try{ const t=localStorage.getItem('theme'); if(t==='dark') document.documentElement.setAttribute('data-theme','dark'); }catch(e){} })();
+</script>
+</html>
+
+

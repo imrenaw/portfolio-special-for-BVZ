@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Live Demo</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
+  <style>
+    body { margin:0; font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial; display:flex; height:100vh; }
+    .sidebar { width: 44%; max-width: 780px; min-width: 360px; display:flex; flex-direction:column; border-right:1px solid rgba(0,0,0,0.06); }
+    .toolbar { padding:12px; display:flex; gap:8px; align-items:center; background:var(--card-bg); }
+    .toolbar button { padding:8px 12px; border-radius:8px; border:0; cursor:pointer; }
+    .editor { flex:1; }
+    .preview { flex:1; display:flex; flex-direction:column; }
+    iframe { border:0; width:100%; height:100%; }
+    .console { height:140px; background:#0b1220; color:#c9d1d9; font-family:monospace; padding:12px; overflow:auto; }
+    .info { font-size:13px; color:var(--muted); }
+    @media (max-width:1000px) { .sidebar{width:50%} }
+    @media (max-width:700px) { body { flex-direction:column } .sidebar{width:100%; height:45vh} .preview{height:55vh} }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="toolbar">
+      <select id="mode-select">
+        <option value="htmlmixed">HTML</option>
+        <option value="javascript">JavaScript</option>
+        <option value="python">Python</option>
+      </select>
+      <button id="run">Run</button>
+      <button id="run-py" style="display:none">Run (Pyodide)</button>
+      <button id="open-tab">Open in new tab</button>
+      <div style="flex:1"></div>
+      <div class="info" id="target-info"></div>
+    </div>
+    <div class="editor"><textarea id="editor"></textarea></div>
+  </div>
+  <div class="preview">
+    <div style="padding:8px; background:var(--card-bg); display:flex; gap:8px; align-items:center">
+      <button id="reload">Reload frame</button>
+      <button id="reset">Load original</button>
+      <div style="flex:1"></div>
+      <div class="info">Live preview</div>
+    </div>
+    <iframe id="demo-frame" sandbox="allow-scripts allow-forms allow-modals allow-same-origin"></iframe>
+    <div id="console" class="console" style="display:none"></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/htmlmixed/htmlmixed.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/xml/xml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/javascript/javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/css/css.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/python/python.min.js"></script>
+    <script>
+    // Apply persisted theme if present
+    (function(){
+      try{
+        const t = localStorage.getItem('theme');
+        if(t === 'dark') document.documentElement.setAttribute('data-theme','dark');
+      }catch(e){}
+    })();
+
+    
+    // Simple live demo loader + editor
+    const editorEl = document.getElementById('editor');
+    const frame = document.getElementById('demo-frame');
+    const runBtn = document.getElementById('run');
+    const runPyBtn = document.getElementById('run-py');
+    const openTabBtn = document.getElementById('open-tab');
+    const reloadBtn = document.getElementById('reload');
+    const resetBtn = document.getElementById('reset');
+    const modeSelect = document.getElementById('mode-select');
+    const consoleEl = document.getElementById('console');
+    const targetInfo = document.getElementById('target-info');
+
+    const cm = CodeMirror.fromTextArea(editorEl, {
+      mode: 'htmlmixed',
+      lineNumbers: true,
+      lineWrapping: true,
+      theme: 'default'
+    });
+
+    let originalSource = '';
+    let currentTarget = location.hash ? location.hash.slice(1) : '';
+    if (!currentTarget) {
+      // If no target provided, show instructions
+      cm.setValue(`<!-- Usage: open this page as skills/live.html#path/to/demo.html -->\n<!-- Example: skills/live.html#semantic-html-demo.html -->\n`);
+      targetInfo.textContent = 'No target specified';
+      frame.srcdoc = '<h2 style="padding:40px">Live demo: no target specified. Append #path/to/page.html</h2>';
+    } else {
+      targetInfo.textContent = currentTarget;
+      loadTarget(currentTarget);
+    }
+
+    async function loadTarget(path) {
+      try {
+        const res = await fetch(path);
+        if (!res.ok) throw new Error('Fetch failed: ' + res.status);
+        const text = await res.text();
+        originalSource = text;
+        cm.setValue(text);
+        frame.srcdoc = text;
+        detectModeFromPath(path);
+      } catch (e) {
+        cm.setValue('Error loading target: ' + e.message);
+        frame.srcdoc = `<pre style="padding:20px;color:#900">Could not load ${path} — try serving the site over HTTP.</pre>`;
+      }
+    }
+
+    function detectModeFromPath(path) {
+      if (path.endsWith('.py') || path.toLowerCase().includes('python')) {
+        modeSelect.value = 'python';
+        cm.setOption('mode', 'python');
+        runPyBtn.style.display = '';
+        runBtn.style.display = 'none';
+        consoleEl.style.display = '';
+      } else if (path.endsWith('.js')) {
+        modeSelect.value = 'javascript';
+        cm.setOption('mode', 'javascript');
+        runPyBtn.style.display = 'none';
+        runBtn.style.display = '';
+        consoleEl.style.display = 'none';
+      } else {
+        modeSelect.value = 'htmlmixed';
+        cm.setOption('mode', 'htmlmixed');
+        runPyBtn.style.display = 'none';
+        runBtn.style.display = '';
+        consoleEl.style.display = 'none';
+      }
+    }
+
+    modeSelect.addEventListener('change', () => {
+      cm.setOption('mode', modeSelect.value);
+      if (modeSelect.value === 'python') { runPyBtn.style.display = ''; runBtn.style.display = 'none'; consoleEl.style.display = ''; }
+      else { runPyBtn.style.display = 'none'; runBtn.style.display = ''; consoleEl.style.display = 'none'; }
+    });
+
+    runBtn.addEventListener('click', () => {
+      const val = cm.getValue();
+      frame.srcdoc = val;
+    });
+
+    openTabBtn.addEventListener('click', () => {
+      const val = cm.getValue();
+      const w = window.open();
+      w.document.open();
+      w.document.write(val);
+      w.document.close();
+    });
+
+    reloadBtn.addEventListener('click', () => {
+      // reload iframe
+      frame.contentWindow.location.reload();
+    });
+
+    resetBtn.addEventListener('click', () => {
+      cm.setValue(originalSource);
+      frame.srcdoc = originalSource;
+    });
+
+    // Pyodide integration (lazy)
+    let pyodide = null;
+    async function ensurePyodide() {
+      if (pyodide) return pyodide;
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js';
+      document.head.appendChild(script);
+      await new Promise(r => script.onload = r);
+      pyodide = await loadPyodide({ indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.23.4/full/' });
+      return pyodide;
+    }
+
+    runPyBtn.addEventListener('click', async () => {
+      consoleEl.textContent = 'Loading Pyodide... (first run may take a few seconds)\n';
+      try {
+        const p = await ensurePyodide();
+        const code = cm.getValue();
+        // Wrap to capture prints
+        const wrapper = `\nimport sys\n_output = []\nclass _W:\n    def write(self, s):\n        try:\n            _output.append(str(s))\n        except Exception:\n            pass\n    def flush(self): pass\nsys.stdout = _W()\nsys.stderr = _W()\n` + code + `\n__out = ''.join(_output)\n`;
+        await p.runPythonAsync(wrapper);
+        const out = p.globals.get('__out');
+        consoleEl.textContent = out || '(no output)';
+      } catch (err) {
+        consoleEl.textContent = 'Error: ' + err.message;
+      }
+    });
+
+  </script>
+</body>
+</html>
