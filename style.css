@@ -537,6 +537,8 @@ body {
 @media (max-width: 768px) {
     .bvz-title {
         letter-spacing: -4px;
+        font-size: clamp(80px, 20vw, 150px);
+        white-space: nowrap;
     }
 
     .section {
