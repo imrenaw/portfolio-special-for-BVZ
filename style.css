@@ -91,6 +91,48 @@ body {
     background-clip: text;
 }
 
+/* Skill card affordances */
+.skill-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    border-radius: 12px;
+    transition: transform .18s ease, box-shadow .18s ease;
+    cursor: pointer;
+}
+.skill-card:hover,
+.skill-card:focus {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+    outline: none;
+}
+.skill-card .skill-icon {
+    transition: transform .18s ease;
+}
+.skill-card:hover .skill-icon {
+    transform: translateY(-4px) rotate(-2deg);
+}
+
+/* Prominent note above the skills grid (global) */
+.skills-note {
+    /* Prominent, left-aligned gradient note */
+    font-size: clamp(18px, 4.5vw, 36px);
+    font-weight: 900;
+    margin: 8px 0 22px;
+    font-style: normal;
+    text-align: left;
+    letter-spacing: 0.2px;
+    line-height: 1.02;
+    /* Stronger gradient for emphasis */
+    background: linear-gradient(90deg, #ff6a00 0%, #ff8c00 40%, #ffd700 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    /* stronger shadow for more pronounced look */
+    text-shadow: 0 8px 22px rgba(0,0,0,0.22);
+    display: block;
+}
+
 .scroll-indicator {
     position: absolute;
     bottom: 40px;
@@ -557,5 +599,45 @@ body {
     .skills-grid,
     .projects-grid {
         grid-template-columns: 1fr;
+    }
+
+    /* Small hint for touch users (localized) */
+    .skill-card::after {
+        content: "Tap to open!";
+        display: block;
+        font-size: 12px;
+        color: #666;
+        margin-top: 8px;
+    }
+
+    /* Add small arrow to card titles to indicate link */
+    .skill-card h3 {
+        display: inline-block;
+        position: relative;
+        padding-right: 18px;
+    }
+    .skill-card h3::after {
+        content: '↗';
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 14px;
+        color: rgba(0,0,0,0.6);
+        transition: transform .18s ease;
+    }
+    .skill-card:hover h3::after,
+    .skill-card:focus h3::after {
+        transform: translateY(-50%) translateX(3px);
+        color: rgba(0,0,0,0.85);
+    }
+
+    /* Small note above skills grid */
+    /* keep only the mobile override here; global rules are defined above */
+    @media (max-width: 480px) {
+        .skills-note {
+            font-size: clamp(14px, 4.5vw, 20px);
+            text-align: left;
+        }
     }
 }
