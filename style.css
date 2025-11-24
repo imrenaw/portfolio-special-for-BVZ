@@ -608,7 +608,7 @@ body {
         padding-right: 18px;
     }
     .skill-card h3::after {
-        content: '↗';
+        
         position: absolute;
         right: 0;
         top: 50%;
@@ -632,3 +632,24 @@ body {
         }
     }
 }
+
+a {
+    -webkit-touch-callout: none;
+    -webkit-text-decoration-skip: none;
+    text-decoration: none !important;
+}
+
+a::after {
+    content: none !important;
+}
+
+.skill-card::after {
+    content: none !important;
+    display: none !important;
+}
+
+a {
+    -webkit-text-decoration-skip: none !important;
+    text-decoration: none !important;
+}
+
